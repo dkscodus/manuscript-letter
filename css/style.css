@@ -7,14 +7,14 @@
 :root {
   --ink:           #161412;
   --ink-soft:      #2a2622;
-  --paper:         #ece4d2;
+  --paper:         #f5f5f5;
   --paper-2:       #e3d9c1;
   --paper-shadow:  #cfc4a8;
   --rule:          #1a1816;
   --accent:        #245a86;
   --accent-deep:   #163a59;
   --accent-bleed:  #3b7aaa;
-  --warn:          #b04a2a;
+  --warn:          #3f3e3e;
 
   --serif:    "Playfair Display", "Noto Serif KR", Georgia, serif;
   --serif-ko: "Noto Serif KR", "Playfair Display", serif;
