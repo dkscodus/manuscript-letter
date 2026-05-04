@@ -1,5 +1,4 @@
 # local Firebase config — keep your keys out of the repo
-js/config.js
 
 # editor / OS
 .DS_Store
