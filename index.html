@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Dear my deer — 정예인 BIRTHDAY 2026</title>
+<meta name="description" content="A birthday cafe rolling-paper for Yeyin. Leave a note on the staff." />
+<meta name="theme-color" content="#ece4d2" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=DM+Mono:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Noto+Serif+KR:wght@400;700;900&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet" />
+
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<!-- paper / risograph grain overlay -->
+<div class="grain" aria-hidden="true"></div>
+<div class="halftone" aria-hidden="true"></div>
+
+<!-- ─── MASTHEAD ────────────────────────────────────────── -->
+<header class="masthead" role="banner">
+  <div class="masthead__top">
+    <div class="masthead__meta masthead__meta--left">
+      <span>VOL. 12</span>
+      <span class="dot">·</span>
+      <span>NO. 062026</span>
+    </div>
+    <div class="masthead__meta masthead__meta--right">
+      <span id="note-count">— NOTES</span>
+      <span class="dot">·</span>
+      <span>SINCE 2014.11</span>
+    </div>
+  </div>
+
+  <h1 class="title">
+    <span class="title__a">DEAR</span>
+    <span class="title__b"><em>my&nbsp;deer</em></span>
+  </h1>
+
+  <div class="masthead__rule">
+    <span>BIRTHDAY CAFE FOR <strong>YEIN</strong></span>
+    <span class="dot">·</span>
+    <span>JUNE&nbsp;2026</span>
+    <span class="dot">·</span>
+    <span class="dot">·</span>
+    <span>140 MONTHS / COUNTING</span>
+  </div>
+</header>
+
+<!-- ─── STAGE (curved staff + notes) ─────────────────────── -->
+<main class="stage" id="stage">
+  <svg id="staff-svg"
+       viewBox="0 0 1400 900"
+       preserveAspectRatio="xMidYMid meet"
+       aria-label="Music staff with fan notes">
+    <defs>
+      <filter id="riso-shift" x="-2%" y="-2%" width="104%" height="104%">
+        <feOffset in="SourceGraphic" dx="0.6" dy="0.6" result="o" />
+        <feMerge><feMergeNode in="o" /><feMergeNode in="SourceGraphic" /></feMerge>
+      </filter>
+    </defs>
+    <g id="staff-layer"></g>
+    <g id="staff-labels"></g>
+    <g id="notes-layer"></g>
+  </svg>
+
+  <!-- empty hint -->
+  <div id="empty-hint" class="empty-hint">
+    <span class="empty-hint__kicker">EMPTY STAFF</span>
+    <span class="empty-hint__text">아직 음표가 없어요. <br/>아래 <b>＋</b> 버튼으로 첫 번째 음표를 남겨주세요.</span>
+  </div>
+</main>
+
+<!-- ─── FOOTER NOTE ──────────────────────────────────────── -->
+<footer class="colophon">
+  <span>Made with love for Y.</span>
+  <span class="dot">·</span>
+  <span class="ko">팬이 직접 남긴 메시지가 시간 순으로 오선지 위에 음표로 새겨집니다</span>
+</footer>
+
+<!-- ─── FLOATING CONTROL BAR ─────────────────────────────── -->
+<div class="dock" role="toolbar" aria-label="Controls">
+  <button id="btn-view"
+          class="dock__btn"
+          type="button"
+          aria-pressed="false"
+          title="조회 모드 / Tap notes to read">
+    <svg viewBox="0 0 24 24" class="dock__icon" aria-hidden="true">
+      <circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/>
+      <circle cx="12" cy="8" r="1.4" fill="currentColor"/>
+      <line x1="12" y1="11.5" x2="12" y2="17" stroke="currentColor" stroke-width="2" stroke-linecap="square"/>
+    </svg>
+    <span class="dock__label">VIEW</span>
+  </button>
+
+  <span class="dock__divider" aria-hidden="true"></span>
+
+  <button id="btn-add"
+          class="dock__btn dock__btn--primary"
+          type="button"
+          title="음표 남기기 / Leave a note">
+    <span class="dock__plus" aria-hidden="true">＋</span>
+    <span class="dock__label">LEAVE&nbsp;A&nbsp;NOTE</span>
+    <span class="dock__icon-music" aria-hidden="true">♪</span>
+  </button>
+</div>
+
+<!-- ─── MODAL :: ADD ─────────────────────────────────────── -->
+<div id="modal-add" class="modal" hidden aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="add-title">
+  <div class="modal__backdrop" data-modal-close></div>
+  <div class="modal__card">
+    <button class="modal__close" type="button" data-modal-close aria-label="Close">×</button>
+
+    <div class="modal__header">
+      <span class="modal__eyebrow">A NOTE FOR YEIN</span>
+      <h2 class="modal__title" id="add-title">Put a<em>Letter</em></h2>
+      <p class="modal__sub">From the moment you met her — to the words you'd leave today.</p>
+    </div>
+
+    <form id="form-add" class="form" novalidate>
+      <fieldset class="field">
+        <legend class="field__label">
+          <span class="field__num">01</span> WHEN DID YOU KNOW?
+        </legend>
+        <div class="picker">
+          <select id="sel-year" name="year" required></select>
+          <span class="picker__sep">/</span>
+          <select id="sel-month" name="month" required></select>
+        </div>
+      </fieldset>
+
+      <fieldset class="field">
+        <legend class="field__label">
+          <span class="field__num">02</span> MESSAGE
+        </legend>
+        <textarea id="msg" name="message" rows="5" maxlength="500"
+          placeholder="전하고 싶은 말..." required></textarea>
+        <div class="field__meta">
+          <span class="char-count"><span id="char-count">0</span> / 500</span>
+        </div>
+      </fieldset>
+
+      <fieldset class="field">
+        <legend class="field__label">
+          <span class="field__num">03</span> NICKNAME <span class="optional">(optional)</span>
+          <span class="field__ko">비워두면 익명</span>
+        </legend>
+        <input id="nick" name="nickname" type="text" maxlength="24"
+               placeholder="from..." autocomplete="off" />
+      </fieldset>
+
+      <button type="submit" class="submit-btn" id="submit-btn">
+        <span>PLACE THE NOTE</span>
+        <span class="submit-btn__icon">♪</span>
+      </button>
+    </form>
+  </div>
+</div>
+
+<!-- ─── MODAL :: VIEW ────────────────────────────────────── -->
+<div id="modal-view" class="modal" hidden aria-hidden="true" role="dialog" aria-modal="true">
+  <div class="modal__backdrop" data-modal-close></div>
+  <div class="modal__card modal__card--view">
+    <button class="modal__close" type="button" data-modal-close aria-label="Close">×</button>
+    <div id="view-content"></div>
+  </div>
+</div>
+
+<!-- ─── TOAST ───────────────────────────────────────────── -->
+<div id="toast" class="toast" hidden role="status" aria-live="polite"></div>
+
+<script type="module" src="js/app.js"></script>
+</body>
+</html>

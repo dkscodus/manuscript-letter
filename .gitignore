@@ -1,0 +1,17 @@
+# local Firebase config — keep your keys out of the repo
+js/config.js
+
+# editor / OS
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# logs
+*.log
+npm-debug.log*
+
+# node (if you ever add a build step)
+node_modules/
+dist/
+.cache/
