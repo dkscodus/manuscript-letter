@@ -240,13 +240,16 @@ async function bootstrap() {
   function redrawStaff() {
     const rect = stage.getBoundingClientRect();
     const W = Math.max(640, Math.round(rect.width));
-    const H = Math.max(460, Math.round(rect.height));
+    const H = Math.max(380, Math.round(rect.height));
     svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
     const isNarrow = W < 720;
+    // Smaller top/bot margins → staffs distribute over the *full* stage
+    // height, no more visual clustering in the middle on tall screens.
+    // lineGap is auto-scaled inside buildStaffGeometry based on the
+    // per-staff block height — leave it undefined here.
     geom = drawStaff(svg, {
-      top:     isNarrow ? 60 : 80,
-      bot:     H - (isNarrow ? 30 : 40),
-      lineGap: isNarrow ? 9 : 11,
+      top:     isNarrow ? 22 : 40,
+      bot:     H - (isNarrow ? 16 : 30),
       xMargin: isNarrow ? 56 : 90
     });
     rerender();

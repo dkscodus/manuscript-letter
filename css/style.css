@@ -37,8 +37,12 @@ html, body {
 body {
   min-height: 100svh;
   position: relative;
-  padding-bottom: 96px; /* space for dock */
+  padding-bottom: 110px; /* space for floating dock */
   isolation: isolate;
+  /* flex column → stage takes whatever vertical space remains, no fixed
+     calc() that breaks when the masthead grows on mobile portrait */
+  display: flex;
+  flex-direction: column;
 }
 
 /* ─── PAPER + GRAIN ──────────────────────────────────────── */
@@ -134,8 +138,8 @@ body::before {
 .stage {
   position: relative; z-index: 2;
   width: 100%;
-  height: calc(100svh - 240px);
-  min-height: 520px;
+  flex: 1 1 0;            /* fill remaining vertical space */
+  min-height: 420px;
   padding: 14px clamp(14px, 3vw, 36px) 14px;
 }
 #staff-svg {
@@ -536,11 +540,19 @@ select {
   .masthead__top { font-size: 10px; }
   .title__a { font-size: clamp(58px, 16vw, 96px); }
   .title__b { font-size: clamp(30px, 9vw, 56px); }
-  .stage { height: calc(100svh - 280px); padding: 8px; min-height: 460px; }
+  .stage { padding: 6px 8px; min-height: 360px; }
   .dock__label { display: none; }
   .dock__btn { padding: 12px 14px; }
-  .colophon { font-size: 9px; }
-  body { padding-bottom: 84px; }
+  .colophon {
+    font-size: 9px;
+    flex-direction: column;
+    gap: 4px;
+    padding: 8px 12px 12px;
+    text-align: center;
+  }
+  /* extra clearance so the floating dock never sits on top of the colophon */
+  body { padding-bottom: 130px; }
+  .dock { bottom: 18px; }
   .modal__card { padding: 22px 18px 20px; box-shadow: 6px 6px 0 var(--accent); }
   .submit-btn { box-shadow: 4px 4px 0 var(--ink); }
 }

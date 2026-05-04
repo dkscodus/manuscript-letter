@@ -92,21 +92,29 @@ export function placeMonth(monthIndex, geometry) {
 // ─── Build staff geometry ───────────────────────────────────
 // Each staff is a 5-line musical staff that follows a gentle sine curve.
 // All five lines share the same wave; they're vertically offset by lineGap.
+//
+// lineGap auto-scales with the per-staff block height so that on tall
+// (mobile portrait) viewports the staff visually fills its block instead
+// of looking like a thin band clustered toward the centre.
 export function buildStaffGeometry(opts = {}) {
   const W = opts.width  ?? 1400;
   const H = opts.height ?? 900;
-  const top = opts.top  ?? 60;
+  const top = opts.top  ?? 30;
   const bot = opts.bot  ?? H - 30;
   const usable = bot - top;
   const blockH = usable / NUM_STAFFS;
-  const lineGap = opts.lineGap ?? 11; // distance between lines in a staff
+  // 5-line staff height = 4 * lineGap → aim for ~60% of block.
+  // Clamp so the staff stays legible on either extreme.
+  const autoLineGap = Math.round(blockH * 0.15);
+  const lineGap = Math.max(8, Math.min(opts.lineGap ?? autoLineGap, 26));
   const xMargin = opts.xMargin ?? 90;
 
   const staffs = [];
   for (let i = 0; i < NUM_STAFFS; i++) {
     const yCenter = top + blockH * (i + 0.5);
-    // alternate amplitude + phase for organic feel
-    const amp   = 14 + (i % 2 === 0 ? 4 : 0);
+    // alternate amplitude + phase for organic feel; tracks lineGap so the
+    // curve looks proportional whether lines are tight or generous.
+    const amp   = Math.round(lineGap * 0.9) + (i % 2 === 0 ? 4 : 0);
     const freq  = 1.4 + (i * 0.18);
     const phase = i * 0.9;
 
