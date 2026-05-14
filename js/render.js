@@ -138,6 +138,16 @@ function _flag() {
   return p;
 }
 
+function _doubleFlag() {
+  const p = document.createElementNS(SVG_NS, "path");
+  // 16분음표용 이중 꼬리 (기존 꼬리 1개 + 약간 아래에 꼬리 1개 더 그림)
+  p.setAttribute("d",
+    `M ${STEM_X} ${-STEM_LEN} c 12 6 14 14 6 22 c 6 -10 4 -16 -6 -22 z ` +
+    `M ${STEM_X} ${-STEM_LEN + 10} c 12 6 14 14 6 22 c 6 -10 4 -16 -6 -22 z`);
+  p.setAttribute("class", "note__flag");
+  return p;
+}
+
 function _wholeBody() {
   // "온음표": wider hollow oval, no stem
   const head = document.createElementNS(SVG_NS, "ellipse");
@@ -160,6 +170,10 @@ export function buildNoteGroup(shape, count) {
   const g = document.createElementNS(SVG_NS, "g");
   g.classList.add("note", `note--${shape}`);
 
+  if (shape === "sixteenth") {
+    g.appendChild(_noteHead(true));
+    g.appendChild(_stem());
+    g.appendChild(_doubleFlag());
   if (shape === "eighth") {
     g.appendChild(_noteHead(true));
     g.appendChild(_stem());
