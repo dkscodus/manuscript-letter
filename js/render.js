@@ -69,7 +69,7 @@ export function drawStaff(svg, opts = {}) {
     const last  = fromIndex(s.lastIdx);
     const lbl = document.createElementNS(SVG_NS, "text");
     lbl.setAttribute("x", s.x0 - 50);
-    lbl.setAttribute("y", s.curveY(s.x0, 4) + 22);
+    lbl.setAttribute("y", s.curveY(s.x0, 4) + 45);
     lbl.setAttribute("class", "staff-label");
     lbl.textContent =
       `${first.year}.${String(first.month).padStart(2,"0")}  →  ${last.year}.${String(last.month).padStart(2,"0")}`;
