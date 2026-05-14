@@ -105,7 +105,7 @@ export function buildStaffGeometry(opts = {}) {
   const blockH = usable / NUM_STAFFS;
   // 5-line staff height = 4 * lineGap → aim for ~60% of block.
   // Clamp so the staff stays legible on either extreme.
-  const autoLineGap = Math.round(blockH * 0.15);
+  const autoLineGap = Math.round(blockH * 0.08);
   const lineGap = Math.max(8, Math.min(opts.lineGap ?? autoLineGap, 26));
   const xMargin = opts.xMargin ?? 90;
 
