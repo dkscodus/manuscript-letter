@@ -88,10 +88,12 @@
           type="button"
           aria-pressed="false"
           title="조회 모드 / Tap notes to read">
-    <svg viewBox="0 0 24 24" class="dock__icon" aria-hidden="true">
-      <circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/>
-      <circle cx="12" cy="8" r="1.4" fill="currentColor"/>
-      <line x1="12" y1="11.5" x2="12" y2="17" stroke="currentColor" stroke-width="2" stroke-linecap="square"/>
+    <svg viewBox="0 0 24 24" class="dock__icon" aria-hidden="true"
+         fill="none" stroke="currentColor" stroke-width="2"
+         stroke-linecap="round" stroke-linejoin="round">
+      <!-- 눈 모양: 음표를 "보러 가는" 의미가 더 직관적으로 전달됨 -->
+      <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/>
+      <circle cx="12" cy="12" r="3"/>
     </svg>
     <span class="dock__label">VIEW</span>
   </button>
