@@ -540,7 +540,7 @@ select {
   .masthead__top { font-size: 10px; }
   .title__a { font-size: clamp(58px, 16vw, 96px); }
   .title__b { font-size: clamp(30px, 9vw, 56px); }
-  .stage { padding: 6px 8px; min-height: 360px; }
+  .stage { padding: 6px 8px; min-height: 500px; }
   .dock__label { display: none; }
   .dock__btn { padding: 12px 14px; }
   .colophon {
