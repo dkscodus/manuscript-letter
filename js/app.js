@@ -240,7 +240,7 @@ async function bootstrap() {
   function redrawStaff() {
     const rect = stage.getBoundingClientRect();
     const W = Math.max(640, Math.round(rect.width));
-    const H = Math.max(380, Math.round(rect.height));
+    const H = Math.round(rect.height * (W / rect.width));
     svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
     const isNarrow = W < 720;
     // Smaller top/bot margins → staffs distribute over the *full* stage
