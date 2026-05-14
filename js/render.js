@@ -174,6 +174,7 @@ export function buildNoteGroup(shape, count) {
     g.appendChild(_noteHead(true));
     g.appendChild(_stem());
     g.appendChild(_doubleFlag());
+  }
   if (shape === "eighth") {
     g.appendChild(_noteHead(true));
     g.appendChild(_stem());
