@@ -251,7 +251,7 @@ async function bootstrap() {
       top:     isNarrow ? 22 : 40,
       bot:     H - (isNarrow ? 16 : 30),
       xMargin: isNarrow ? 56 : 90,
-      lineGap: isNarrow ? 15 : undefined
+      // lineGap: isNarrow ? 15 : undefined
     });
     rerender();
   }
