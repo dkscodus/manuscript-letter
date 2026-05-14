@@ -170,22 +170,21 @@ export function buildNoteGroup(shape, count) {
   const g = document.createElementNS(SVG_NS, "g");
   g.classList.add("note", `note--${shape}`);
 
-  if (shape === "sixteenth") {
+  if (shape === "sixteenth") {          // 16분음표
     g.appendChild(_noteHead(true));
     g.appendChild(_stem());
     g.appendChild(_doubleFlag());
-  }
-  if (shape === "eighth") {
+  } else if (shape === "eighth") {      // 8분음표 (여기가 중요합니다. else if로 연결!)
     g.appendChild(_noteHead(true));
     g.appendChild(_stem());
     g.appendChild(_flag());
-  } else if (shape === "quarter") {
+  } else if (shape === "quarter") {     // 4분음표
     g.appendChild(_noteHead(true));
     g.appendChild(_stem());
-  } else if (shape === "half") {
+  } else if (shape === "half") {        // 2분음표
     g.appendChild(_noteHead(false));
     g.appendChild(_stem());
-  } else { // whole
+  } else {                              // 온음표 (그 외의 모든 경우)
     g.appendChild(_wholeBody());
     g.appendChild(_tieArc());
   }
