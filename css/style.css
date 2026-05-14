@@ -166,9 +166,9 @@ body::before {
 .staff-label--accent { fill: var(--accent); }
 
 .staff-clef {
-  font-family: var(--serif);
-  font-style: italic;
-  font-weight: 900;
+  font-family: "Noto Music", sans-serif; /* 음악 전용 폰트 적용 */
+  font-style: normal;                    /* 기울임 해제 (똑바로 서게) */
+  font-weight: 400;                      /* 폰트 굵기 정상화 */
   font-size: 60px;
   fill: var(--ink);
 }

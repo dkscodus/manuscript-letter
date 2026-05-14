@@ -250,7 +250,8 @@ async function bootstrap() {
     geom = drawStaff(svg, {
       top:     isNarrow ? 22 : 40,
       bot:     H - (isNarrow ? 16 : 30),
-      xMargin: isNarrow ? 56 : 90
+      xMargin: isNarrow ? 56 : 90,
+      lineGap: isNarrow ? 15 : undefined
     });
     rerender();
   }
