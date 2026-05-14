@@ -230,14 +230,17 @@ export function renderNotes(svg, geom, groups, onNoteClick, justAddedKey) {
     // simpler: y at slot offset directly
     const y = placed.yMid + slot * (staff.lineGap / 2);
 
+    const wrapper = document.createElementNS("http://www.w3.org/2000/svg", "g");
+    wrapper.setAttribute("transform", `translate(${placed.x}, ${y}) rotate(${placed.angle})`);
+
     const node = buildNoteGroup(shape, count);
     node.setAttribute("data-ym", key);
     node.setAttribute("data-month-index", g.monthIndex);
     node.setAttribute("data-count", count);
-    node.style.setProperty("--tx", `${placed.x}px`);
-    node.style.setProperty("--ty", `${y}px`);
-    node.style.setProperty("--rot", `${placed.angle}deg`);
-    node.setAttribute("transform", `translate(${placed.x}, ${y}) rotate(${placed.angle})`);
+    // node.style.setProperty("--tx", `${placed.x}px`);
+    // node.style.setProperty("--ty", `${y}px`);
+    // node.style.setProperty("--rot", `${placed.angle}deg`);
+    // node.setAttribute("transform", `translate(${placed.x}, ${y}) rotate(${placed.angle})`);
     if (key === justAddedKey) node.classList.add("note--enter");
 
     node.addEventListener("click", (e) => {
@@ -245,6 +248,7 @@ export function renderNotes(svg, geom, groups, onNoteClick, justAddedKey) {
       onNoteClick && onNoteClick(g, node);
     });
 
+    wrapper.appendChild(node);
     layer.appendChild(node);
   }
 }

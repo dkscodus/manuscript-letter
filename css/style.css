@@ -177,8 +177,8 @@ body::before {
 .note {
   color: var(--ink);
   cursor: default;
-  transform-box: fill-box;
-  transform-origin: 0 0; /* pivot at note head, matches SVG attribute transform */
+  /* transform-box: fill-box;
+  transform-origin: 0 0; pivot at note head, matches SVG attribute transform */
   transition: color 160ms;
   filter: url(#riso-shift);
 }
@@ -196,12 +196,14 @@ body::before {
 
 /* enter animation */
 @keyframes notein {
-  0%   { opacity: 0; transform: translate(var(--tx), var(--ty)) rotate(var(--rot)) scale(0.4); }
-  60%  { opacity: 1; transform: translate(var(--tx), var(--ty)) rotate(var(--rot)) scale(1.18); }
-  100% { opacity: 1; transform: translate(var(--tx), var(--ty)) rotate(var(--rot)) scale(1); }
+  0%   { opacity: 0; transform: scale(0.4); }
+  60%  { opacity: 1; transform: scale(1.18); }
+  100% { opacity: 1; transform: scale(1); }
 }
-.note--enter { animation: notein 520ms cubic-bezier(.2,.8,.2,1) both; }
-
+.note--enter { 
+  transform-origin: 0 0; /* 음표 머리 부분을 기준으로 커지게 함 */
+  animation: notein 520ms cubic-bezier(.2,.8,.2,1) both; 
+}
 /* viewer mode interaction */
 .stage.is-viewing .note { cursor: pointer; }
 .stage.is-viewing .note:hover {

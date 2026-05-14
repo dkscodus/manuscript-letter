@@ -46,11 +46,11 @@ export function ymKey(year, month) {
 //  6–10 → half (hollow)
 //  >10  → whole (with tie effect)
 export function shapeForCount(n) {
-  if (n === 1) return "sixteenth"; // 1개: 16분음표 (꼬리 2개)
-  if (n <= 3)  return "eighth";    // 2~3개: 8분음표 (꼬리 1개)
-  if (n <= 6)  return "quarter";   // 4~6개: 4분음표 (까만 머리 + 기둥)
-  if (n <= 10) return "half";      // 7~10개: 2분음표 (하얀 머리 + 기둥)
-  return "whole";                  // 11개 이상: 온음표 (하얀 머리, 기둥 없음)
+  if (n < 2)  return "sixteenth"; // 1개: 16분음표
+  if (n < 4)  return "eighth";    // 2~3개: 8분음표
+  if (n < 8)  return "quarter";   // 4~7개: 4분음표
+  if (n < 16) return "half";      // 8~15개: 2분음표
+  return "whole";                 // 16개 이상: 온음표
 }
 
 // ─── Simple deterministic hash for vertical slot ────────────
