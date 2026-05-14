@@ -222,34 +222,42 @@ export function renderNotes(svg, geom, groups, onNoteClick, justAddedKey) {
     const placed = placeMonth(g.monthIndex, geom);
     const staff = geom.staffs[placed.staffIdx];
 
-    // Pick a representative slot for the cluster (deterministic)
-    // slot range: -3..+3 (above middle line ↔ below) — keep notes inside staff
+    // Pick a representative slot for the cluster (deterministic).
+    // 슬롯 범위를 좁혀서 stem이 오선지 위로 너무 튀어나가지 않도록.
+    //   slot=-2 → 위쪽 1번선 근처 / slot=+2 → 아래쪽 1번선 근처
     const repSeed = (g.items[0]?.id || key) + ":" + count;
-    const slot = seededInt(repSeed, -3, 3);
-    const slotY = staff.curveY(placed.x, 2 + slot * 0.5) - placed.yMid + placed.yMid; // explicit
-    // simpler: y at slot offset directly
+    const slot = seededInt(repSeed, -2, 2);
     const y = placed.yMid + slot * (staff.lineGap / 2);
 
-    const wrapper = document.createElementNS("http://www.w3.org/2000/svg", "g");
-    wrapper.setAttribute("transform", `translate(${placed.x}, ${y}) rotate(${placed.angle})`);
+    // 음표 자체 크기를 lineGap에 맞춰 비례 스케일.
+    // STEM_LEN(38)이 오선지 절반(2*lineGap) 정도에 머물도록 설정.
+    const targetStem = 2 * staff.lineGap + 8;
+    const noteScale  = Math.max(0.55, Math.min(1.15, targetStem / STEM_LEN));
+
+    // ★ 핵심 버그 수정 ★
+    //   기존엔 wrapper.appendChild(node) 후 layer.appendChild(node) 가 호출돼서
+    //   node가 wrapper에서 빠져 나와 layer로 이동해 버렸음 → wrapper의 transform
+    //   (위치/회전)이 적용되지 않아 모든 음표가 SVG (0,0)에 겹쳐 그려졌음.
+    //   wrapper를 layer에 붙이고, 안에 node를 둬서 transform이 살아 있게 함.
+    const wrapper = document.createElementNS(SVG_NS, "g");
+    wrapper.setAttribute(
+      "transform",
+      `translate(${placed.x}, ${y}) rotate(${placed.angle}) scale(${noteScale})`
+    );
+    wrapper.setAttribute("data-ym", key);
+    wrapper.setAttribute("data-month-index", g.monthIndex);
+    wrapper.setAttribute("data-count", count);
 
     const node = buildNoteGroup(shape, count);
-    node.setAttribute("data-ym", key);
-    node.setAttribute("data-month-index", g.monthIndex);
-    node.setAttribute("data-count", count);
-    // node.style.setProperty("--tx", `${placed.x}px`);
-    // node.style.setProperty("--ty", `${y}px`);
-    // node.style.setProperty("--rot", `${placed.angle}deg`);
-    // node.setAttribute("transform", `translate(${placed.x}, ${y}) rotate(${placed.angle})`);
     if (key === justAddedKey) node.classList.add("note--enter");
 
-    node.addEventListener("click", (e) => {
+    wrapper.addEventListener("click", (e) => {
       e.stopPropagation();
-      onNoteClick && onNoteClick(g, node);
+      onNoteClick && onNoteClick(g, wrapper);
     });
 
     wrapper.appendChild(node);
-    layer.appendChild(node);
+    layer.appendChild(wrapper);
   }
 }
 

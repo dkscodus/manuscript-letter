@@ -106,8 +106,10 @@ export function buildStaffGeometry(opts = {}) {
   const blockH = usable / NUM_STAFFS;
   // 5-line staff height = 4 * lineGap → aim for ~60% of block.
   // Clamp so the staff stays legible on either extreme.
-  const autoLineGap = Math.round(blockH * 0.08);
-  const lineGap = Math.max(8, Math.min(opts.lineGap ?? autoLineGap, 26));
+  // 0.08 로 줄여둔 값이 너무 좁아서 음표가 오선지 밖으로 튀어 나갔음.
+  // 0.13 으로 복구하고 최소값도 8 → 12 로 올려서 모바일에서도 stem이 살게.
+  const autoLineGap = Math.round(blockH * 0.13);
+  const lineGap = Math.max(12, Math.min(opts.lineGap ?? autoLineGap, 26));
   const xMargin = opts.xMargin ?? 90;
 
   const staffs = [];

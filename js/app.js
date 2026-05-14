@@ -239,8 +239,10 @@ async function bootstrap() {
   // no distortion).
   function redrawStaff() {
     const rect = stage.getBoundingClientRect();
+    const rectW = Math.max(1, rect.width);
     const W = Math.max(640, Math.round(rect.width));
-    const H = Math.round(rect.height * (W / rect.width));
+    // rect.height 가 0 일 때 H가 0이 되어 viewBox가 깨지는 것 방지
+    const H = Math.max(380, Math.round(rect.height * (W / rectW)));
     svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
     const isNarrow = W < 720;
     // Smaller top/bot margins → staffs distribute over the *full* stage

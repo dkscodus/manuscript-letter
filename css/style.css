@@ -177,8 +177,10 @@ body::before {
 .note {
   color: var(--ink);
   cursor: default;
-  /* transform-box: fill-box;
-  transform-origin: 0 0; pivot at note head, matches SVG attribute transform */
+  /* scale 같은 CSS transform이 음표 자기 자신의 머리를 기준으로 적용되도록.
+     이게 빠지면 scale 중심이 SVG (0,0)이 되어 음표가 좌상단으로 끌려감. */
+  transform-box: fill-box;
+  transform-origin: 0 0;
   transition: color 160ms;
   filter: url(#riso-shift);
 }
@@ -189,20 +191,22 @@ body::before {
 .note__tie  { fill: none; stroke: currentColor; stroke-width: 1.8; }
 
 /* density flavors */
-.note--whole   { color: var(--accent); }
-.note--half    { color: var(--accent-deep); }
-.note--quarter { color: var(--ink); }
-.note--eighth  { color: var(--ink); }
+.note--whole     { color: var(--accent); }
+.note--half      { color: var(--accent-deep); }
+.note--quarter   { color: var(--ink); }
+.note--eighth    { color: var(--ink); }
+.note--sixteenth { color: var(--ink); }
 
-/* enter animation */
+/* enter animation
+   ── wrapper <g>가 translate/rotate/scale 을 SVG transform 속성으로 가짐.
+      .note 에는 CSS scale 만 얹어서 위치는 절대 안 흔들림. */
 @keyframes notein {
   0%   { opacity: 0; transform: scale(0.4); }
   60%  { opacity: 1; transform: scale(1.18); }
   100% { opacity: 1; transform: scale(1); }
 }
-.note--enter { 
-  transform-origin: 0 0; /* 음표 머리 부분을 기준으로 커지게 함 */
-  animation: notein 520ms cubic-bezier(.2,.8,.2,1) both; 
+.note--enter {
+  animation: notein 520ms cubic-bezier(.2,.8,.2,1) both;
 }
 /* viewer mode interaction */
 .stage.is-viewing .note { cursor: pointer; }
